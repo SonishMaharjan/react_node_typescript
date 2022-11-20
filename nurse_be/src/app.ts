@@ -2,6 +2,8 @@ import express from "express";
 import config from "config";
 import log from "./logger";
 
+import routes from "./routes";
+
 import connect from "./db/connect";
 
 const port = config.get("port") as number;
@@ -16,4 +18,6 @@ app.listen(port, host, () => {
   log.info(`Server litening port http://${host}:${port}.`);
 
   connect();
+
+  routes(app);
 });
