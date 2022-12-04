@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserDocument } from "./user.model";
+// import { UserDocument } from "./user.model";
 
 enum WeekDays {
   SUNDAY,
@@ -20,7 +20,7 @@ export interface NurseDocument extends mongoose.Document {
   workingDays: WeekDays[];
   dutyStartTime: string;
   dutyEndTime: string;
-  createdBy: UserDocument["_id"];
+  // createdBy: UserDocument["_id"];
 }
 
 const NurseSchema = new mongoose.Schema(

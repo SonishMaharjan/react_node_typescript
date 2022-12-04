@@ -2,46 +2,65 @@ import { Request, Response } from "express";
 
 import { get } from "lodash";
 
-import { findSessions } from "../service/session.service";
+// import //   createAccessToken,
+// // updateSession
+// "../service/session.service.post";
 
-import { validatePassword } from "../service/user.service";
+import { validatePasswordService } from "../service/user.service";
 
 import {
-  createSession,
   createAccessToken,
-  updateSession,
+  createSessionService,
 } from "../service/session.service";
+
 import config from "config";
 
 import { sign } from "../utils/jwt.utils";
 
+import { findBy as findSessionBy } from "../model/session.model";
+
+/**
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
 export async function createUserSessionHandler(req: Request, res: Response) {
   // validate the email and password
-  const user = await validatePassword(req.body);
+  const user = await validatePasswordService(req.body);
 
   if (!user) {
     return res.status(401).send("Invalid username or password");
   }
 
   // Create the session
-  const session = await createSession(user._id, req.get("user-agent") || "");
+  const session = await createSessionService(
+    user.id,
+    req.get("user-agent") || ""
+  );
 
   // Create the access token
   const accessToken = createAccessToken({ user, session });
 
   // Create the refresh token
   const refreshToken = sign(session, {
-    expiresIn: config.get("refreshTokenTtl"),
+    expiresIn: config.get("SERVER.refreshTokenTtl"),
   }); //1 year)
 
   // send the refresh and access token
   return res.send({ accessToken, refreshToken });
 }
 
+/**
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
 export async function getUserSessionHandler(req: Request, res: Response) {
-  const userId = get(req, "user._id");
+  const userId = get(req, "user.id");
 
-  const sessions = await findSessions({ user: userId, valid: true });
+  const sessions = await findSessionBy({ user_id: userId, isValid: true });
 
   return res.send(sessions);
 }

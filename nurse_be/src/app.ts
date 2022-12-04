@@ -8,11 +8,12 @@ import routes from "./routes";
 
 import connect from "./db/connect";
 
-const port = config.get("port") as number;
-const host = config.get("host") as string;
+const port = config.get("SERVER.port") as number;
+const host = config.get("SERVER.host") as string;
 
 const app = express();
 
+// add user to reques
 app.use(deserializeUser);
 
 app.use(express.json());
@@ -21,7 +22,5 @@ app.use(express.urlencoded({ extended: false }));
 app.listen(port, host, () => {
   log.info(`Server litening port http://${host}:${port}.`);
 
-  connect();
-
-  routes(app);
+  app.use("/api", routes);
 });

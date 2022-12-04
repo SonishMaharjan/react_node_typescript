@@ -1,41 +1,43 @@
-import { DocumentDefinition, FilterQuery, UpdateQuery } from "mongoose";
-import User, { UserDocument } from "../model/user.model";
+import { createUser, findBy, CreateUserInput } from "../model/user.model";
+
+import { User } from "../model/user.model";
 
 import { omit } from "lodash";
-import Session, { SessionDocument } from "../model/session.model";
 
-export async function createUser(input: DocumentDefinition<UserDocument>) {
+import { compareString } from "../utils/jwt.utils";
+
+export async function createUserService(input: CreateUserInput) {
   try {
-    return await User.create(input);
+    const user = (await createUser(input))[0];
+
+    return omit(user, "password");
   } catch (error: any) {
     throw new Error(error);
   }
 }
-export async function findUser(query: FilterQuery<UserDocument>) {
-  return User.findOne(query).lean();
+
+export async function findAllUserService() {
+  try {
+    return await findBy({});
+  } catch (error: any) {
+    throw new Error(error);
+  }
 }
 
-export async function validatePassword({
+export async function validatePasswordService({
   email,
   password,
 }: {
-  email: UserDocument["email"];
+  email: User["email"];
   password: string;
 }) {
-  const user = await User.findOne({ email });
+  const user = (await findBy({ email }))[0];
 
   if (!user) return false;
 
-  const isValid = await user.comparePassword(password);
+  const isValid = await compareString(password, user.password);
 
   if (!isValid) return false;
 
-  return omit(user.toJSON(), "password");
-}
-
-export async function updateSession(
-  query: FilterQuery<SessionDocument>,
-  update: UpdateQuery<SessionDocument>
-) {
-  return Session.updateOne(query, update);
+  return omit(user, "password");
 }

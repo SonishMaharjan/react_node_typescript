@@ -1,58 +1,50 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import config from "config";
+/* tslint:disable await-promise */
 
-export interface HookNextFunction {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (error?: Error): any;
+import dbProvider from "../db/db";
+import { omit } from "lodash";
+import { getPasswordHash } from "../utils/jwt.utils";
+import { has } from "config";
+
+export interface User {
+  id?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
-export interface UserDocument extends mongoose.Document {
-  email: string;
-  name: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-  comparePassword(candidatePassword: string): Promise<boolean>;
+export interface CreateUserInput extends Omit<User, "id"> {
+  passwordConfirmation: string;
 }
 
-const UserSchema = new mongoose.Schema(
-  {
-    email: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    password: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+export const createUser = async (user: CreateUserInput) => {
+  let newUser = omit(user, "passwordConfirmation");
 
-UserSchema.pre("save", async function (next: HookNextFunction) {
-  let user = this as UserDocument;
+  const timeStamp = new Date();
 
-  // only hash the password if it has been modified (or new)
-  if (!user.isModified("password")) return next();
+  const hashedPassword = await getPasswordHash(user.password);
 
-  // Random additional data
-  const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
+  newUser = {
+    ...newUser,
+    created_at: timeStamp,
+    updated_at: timeStamp,
+    password: hashedPassword,
+  };
 
-  const hash = await bcrypt.hashSync(user.password, salt);
+  const result = (await dbProvider
+    .postgres("users")
+    .insert(newUser)
+    .returning("*")) as User[];
 
-  // Replatce the password with the hash
-  user.password = hash;
-
-  return next();
-});
-
-// Used for logging in
-UserSchema.methods.comparePassword = async function (
-  candidatePassword: string
-) {
-  const user = this as UserDocument;
-
-  return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+  return result;
 };
 
-// const User = mongoose.model<UserDocument>("User", UserSchema);
+export interface GetUserQuery
+  extends Omit<User, "created_at" | "password" | "updated_at"> {}
 
-const User = mongoose.model<UserDocument>("User", UserSchema);
+export const findBy = async (query: GetUserQuery = {}): Promise<User[]> => {
+  const result = await dbProvider.postgres("users").where(query);
 
-export default User;
+  return result;
+};

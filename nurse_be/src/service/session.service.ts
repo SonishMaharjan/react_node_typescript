@@ -1,35 +1,43 @@
-import { FilterQuery, LeanDocument, UpdateQuery } from "mongoose";
 import config from "config";
-import Session, { SessionDocument } from "../model/session.model";
-import { UserDocument } from "../model/user.model";
+
+import { Session } from "../model/session.model";
+
+import { createSession } from "../model/session.model";
+
+import { User } from "../model/user.model";
 
 import { sign, decode } from "../utils/jwt.utils";
 
+import { findBy as findSessionBy } from "../model/session.model";
+import { findBy as findUserBy } from "../model/user.model";
+
 import { get } from "lodash";
 
-import { findUser } from "../service/user.service";
+export async function createSessionService(
+  userId: string = "",
+  userAgent: string = ""
+) {
+  const session = (
+    await createSession({
+      user_id: userId,
+      userAgent: userAgent,
+    })
+  )[0];
 
-export async function createSession(userId: string, userAgent: string) {
-  const session = await Session.create({ user: userId, userAgent: userAgent });
-
-  return session.toJSON();
+  return session;
 }
 
 export function createAccessToken({
   user,
   session,
 }: {
-  user:
-    | Omit<UserDocument, "password">
-    | LeanDocument<Omit<UserDocument, "password">>;
-  session:
-    | Omit<SessionDocument, "password">
-    | LeanDocument<Omit<SessionDocument, "password">>;
+  user: Omit<User, "password">;
+  session: Session;
 }) {
   // Build and retrun the access token
   const accessToken = sign(
-    { ...user, session: session._id },
-    { expiresIn: config.get("accessTokenTtl") } // 15 mins
+    { ...user, session: session.id },
+    { expiresIn: config.get("SERVER.accessTokenTtl") } // 15 mins
   );
 
   return accessToken;
@@ -45,28 +53,19 @@ export async function reIssueAccessToken({
 
   if (!decoded || !get(decoded, "_id")) return false;
 
+  const sessionId = get(decoded, "_id");
+
   // Get session
-  const session = await Session.findById(get(decoded, "_id"));
+  const session = (await findSessionBy({ id: sessionId }))[0];
 
   // Make sure the session is still valid
-  if (!session || !session?.valid) return false;
+  if (!session || !session?.isValid) return false;
 
-  const user = await findUser({ _id: session.user });
+  const user = (await findUserBy({ id: session.user_id }))[0];
 
   if (!user) return false;
 
   const accessToken = createAccessToken({ user, session });
 
   return accessToken;
-}
-
-export async function updateSession(
-  query: FilterQuery<SessionDocument>,
-  update: UpdateQuery<SessionDocument>
-) {
-  return Session.update(query, update);
-}
-
-export async function findSessions(query: FilterQuery<SessionDocument>) {
-  return Session.find(query).lean();
 }

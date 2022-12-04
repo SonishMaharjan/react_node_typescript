@@ -1,23 +1,66 @@
-import mongoose from "mongoose";
-import { UserDocument } from "./user.model";
+/* tslint:disable await-promise */
 
-export interface SessionDocument extends mongoose.Document {
-  user: UserDocument["_id"]; // it could be string
-  valid: boolean;
-  userAgent: string;
-  createdAt: Date;
-  updatedAt: Date;
+import dbProvider from "../db/db";
+import { omit } from "lodash";
+
+export interface Session {
+  id?: string;
+  isValid?: boolean;
+  userAgent?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  user_id?: string;
 }
 
-const SessionSchema = new mongoose.Schema(
-  {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    valid: { type: Boolean, default: true },
-    userAgent: { type: String },
-  },
-  { timestamps: true }
-);
+export interface CreateSessionInput extends Omit<Session, "id"> {}
 
-const Session = mongoose.model<SessionDocument>("Session", SessionSchema);
+export const createSession = async (session: CreateSessionInput) => {
+  const timeStamp = new Date();
 
-export default Session;
+  session = {
+    ...session,
+    isValid: true,
+    created_at: timeStamp,
+    updated_at: timeStamp,
+  };
+
+  const result = (await dbProvider
+    .postgres("sessions")
+    .insert(session)
+    .returning("*")) as Session[];
+
+  return result;
+};
+
+export interface GetSessionQuery
+  extends Omit<Session, "created_at" | "updated_at"> {}
+
+export const findBy = async (
+  query: GetSessionQuery = {}
+): Promise<Session[]> => {
+  const result = await dbProvider.postgres("sessions").where(query);
+
+  return result;
+};
+
+export interface UpdateSessionQuery extends Pick<Session, "id"> {}
+
+export const updateSession = async (
+  whereQuery: UpdateSessionQuery = {},
+  session: Session
+) => {
+  const timeStamp = new Date();
+
+  session = {
+    ...session,
+    updated_at: timeStamp,
+  };
+
+  const result = (await dbProvider
+    .postgres("sessions")
+    .where(whereQuery)
+    .update(session)
+    .returning("*")) as Session[];
+
+  return result;
+};

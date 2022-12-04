@@ -3,7 +3,7 @@ import config from "config";
 import log from "../logger";
 
 function connect() {
-  const dbUri = config.get("dbUri") as string;
+  const dbUri = config.get("DATABASE.dbUri") as string;
 
   //   mongoose.connect(
   //     mongoAtlasUri,
