@@ -3,7 +3,6 @@
 import dbProvider from "../db/db";
 import { omit } from "lodash";
 import { getPasswordHash } from "../utils/jwt.utils";
-import { has } from "config";
 
 export interface User {
   id?: string;

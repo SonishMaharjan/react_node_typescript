@@ -3,44 +3,42 @@ import { Request, response, Response } from "express";
 import { find, get } from "lodash";
 
 import {
-  createNurse,
-  findNurse,
-  deleteNurse,
-  findAndUpdateNurse,
-  findAllNurses,
+  addNurse,
+  findAllNurse,
+  findNurseById,
+  updateNurseById,
+  deleteNurseById,
 } from "../service/nurse.service";
 
 export async function createNurseHandler(req: Request, res: Response) {
-  const userId = get(req, "user._id");
+  const userId = get(req, "user.id");
 
   const body = req.body;
-  const nurse = await createNurse({ ...body, createdBy: userId });
+  const nurse = await addNurse({ ...body, userId });
 
   return res.send(nurse);
 }
 
 export async function updateNurseHandler(req: Request, res: Response) {
-  const nurseId = get(req, "params.postId");
+  const nurseId = get(req, "params.nurseId");
 
   const update = req.body;
 
-  const nurse = await findNurse({ nurseId });
+  const nurse = await findNurseById(nurseId);
 
   if (!nurse) {
     return res.sendStatus(404);
   }
 
-  const updatedNurse = await findAndUpdateNurse({ nurseId }, update, {
-    new: true,
-  });
+  const updatedNurse = await updateNurseById(nurseId, update);
 
   return res.send(updatedNurse);
 }
 
 export async function getNurseHandler(req: Request, res: Response) {
-  const nurseId = get(req, "params,nurseId");
+  const nurseId = get(req, "params.nurseId");
 
-  const nurse = await findNurse({ nurseId });
+  const nurse = await findNurseById(nurseId);
 
   if (!nurse) {
     res.sendStatus(404);
@@ -52,17 +50,17 @@ export async function getNurseHandler(req: Request, res: Response) {
 export async function deleteNurseHandler(req: Request, res: Response) {
   const nurseId = get(req, "params.nurseId");
 
-  const nurse = await findNurse({ nurseId });
+  const nurse = await findNurseById(nurseId);
 
   if (!nurse) return res.sendStatus(404);
 
-  await deleteNurse({ nurseId });
+  await deleteNurseById(nurseId);
 
   return res.sendStatus(200);
 }
 
 export async function getAllNurseHandler(req: Request, res: Response) {
-  const nurses = await findAllNurses({});
+  const nurses = await findAllNurse({});
 
   return res.send(nurses);
 }

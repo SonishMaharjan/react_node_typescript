@@ -21,7 +21,6 @@ export const createNurseSchema = object({
 
 export const updateNurseSchema = object({
   ...params,
-  ...payload,
 });
 
 export const deleteNurseSchema = object({

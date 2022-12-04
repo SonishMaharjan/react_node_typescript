@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-// import { UserDocument } from "./user.model";
+import dbProvider from "../db/db";
 
 enum WeekDays {
   SUNDAY,
@@ -11,31 +10,85 @@ enum WeekDays {
   SATURDAYS,
 }
 
-export interface NurseDocument extends mongoose.Document {
-  name: string;
-  email: string;
-  contact: string;
-  createdAt: Date;
-  updatedAt: Date;
-  workingDays: WeekDays[];
-  dutyStartTime: string;
-  dutyEndTime: string;
-  // createdBy: UserDocument["_id"];
+export interface Nurse {
+  id?: string;
+  name?: string;
+  email?: string;
+  contact?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  weekdays?: WeekDays[] | string;
+  startTime?: string;
+  endTime?: string;
+  isRoundingManager?: boolean;
+  image?: string;
+  createdBy?: number;
 }
 
-const NurseSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    contact: { type: String },
-    workingDays: { type: Array<WeekDays> },
-    dutyStartTime: { type: String },
-    dutyEndTime: { type: String },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  },
-  { timestamps: true }
-);
+export const createNurse = async (nurse: Nurse) => {
+  const timeStamp = new Date();
 
-const Nurse = mongoose.model<NurseDocument>("NurseDocument", NurseSchema);
+  const weekdays = JSON.stringify(nurse?.weekdays || []);
 
-export default Nurse;
+  const newNurse = {
+    ...nurse,
+    weekdays,
+    created_at: timeStamp,
+    updated_at: timeStamp,
+  };
+
+  const result = (await dbProvider
+    .postgres("nurses")
+    .insert(newNurse)
+    .returning("*")) as Nurse[];
+
+  return result;
+};
+
+export interface FilterNurseQuery
+  extends Omit<Nurse, "created_at" | "updated_at"> {}
+
+export const findNurseBy = async (
+  query: FilterNurseQuery = {}
+): Promise<Nurse[]> => {
+  const result = await dbProvider.postgres("nurses").where(query);
+
+  return result;
+};
+
+export const updateNurse = async (
+  whereQuery: FilterNurseQuery = {},
+  nurse: Nurse
+) => {
+  const timeStamp = new Date();
+
+  const weekdays = JSON.stringify(nurse?.weekdays || []);
+
+  nurse = {
+    ...nurse,
+    weekdays,
+    updated_at: timeStamp,
+  };
+
+  const result = (await dbProvider
+    .postgres("nurses")
+    .where(whereQuery)
+    .update(nurse)
+    .returning("*")) as Nurse[];
+
+  return result;
+};
+
+export interface DeleteNurseQuery extends Pick<Nurse, "id"> {}
+
+export const deleteNurse = async (whereQuery: FilterNurseQuery = {}) => {
+  const timeStamp = new Date();
+
+  const result = (await dbProvider
+    .postgres("nurses")
+    .where(whereQuery)
+    .del()
+    .returning("*")) as Nurse[];
+
+  return result;
+};

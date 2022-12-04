@@ -1,36 +1,34 @@
 import {
-  DocumentDefinition,
-  FilterQuery,
-  QueryOptions,
-  UpdateQuery,
-} from "mongoose";
-import { deleteNurseHandler } from "../controller/nurse.controller";
+  Nurse,
+  createNurse,
+  updateNurse,
+  deleteNurse,
+  findNurseBy,
+  FilterNurseQuery,
+} from "../model/nurse.model";
 
-import Nurse, { NurseDocument } from "../model/nurse.model";
-
-export function createNurse(input: DocumentDefinition<NurseDocument>) {
-  return Nurse.create(input);
+export async function addNurse(input: Nurse) {
+  const nurse = await createNurse(input);
+  return nurse;
 }
 
-export function findNurse(
-  query: FilterQuery<NurseDocument>,
-  options: QueryOptions = { lean: true }
-) {
-  return Nurse.findOne(query, {}, options);
+export async function findAllNurse(query: FilterNurseQuery) {
+  const nurses = await findNurseBy();
+
+  return nurses;
 }
 
-export function findAndUpdateNurse(
-  query: FilterQuery<NurseDocument>,
-  update: UpdateQuery<NurseDocument>,
-  options: QueryOptions
-) {
-  return Nurse.findOneAndUpdate(query, update, options);
+export async function findNurseById(id: string) {
+  const nurses = await findNurseBy({ id });
+
+  return nurses;
 }
 
-export function deleteNurse(query: FilterQuery<NurseDocument>) {
-  return Nurse.deleteOne(query);
+export async function updateNurseById(id: string, nurse: Nurse) {
+  const updatedNurse = await updateNurse({ id }, nurse);
+  return updatedNurse;
 }
 
-export async function findAllNurses(query: FilterQuery<NurseDocument>) {
-  return Nurse.find(query).lean();
+export async function deleteNurseById(id: string) {
+  return await deleteNurse({ id });
 }
