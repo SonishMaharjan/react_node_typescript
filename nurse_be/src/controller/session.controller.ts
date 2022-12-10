@@ -47,6 +47,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     expiresIn: config.get("SERVER.refreshTokenTtl"),
   }); //1 year)
 
+  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+
   // send the refresh and access token
   return res.send({ accessToken, refreshToken });
 }

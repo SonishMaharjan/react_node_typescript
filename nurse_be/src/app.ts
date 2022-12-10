@@ -1,6 +1,7 @@
 import express from "express";
 import config from "config";
 import log from "./logger";
+import cors from "cors";
 
 import { deserializeUser } from "./middleware/index";
 
@@ -12,6 +13,8 @@ const port = config.get("SERVER.port") as number;
 const host = config.get("SERVER.host") as string;
 
 const app = express();
+
+app.use(cors());
 
 // add user to reques
 app.use(deserializeUser);
