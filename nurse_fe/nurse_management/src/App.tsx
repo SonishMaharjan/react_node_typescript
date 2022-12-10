@@ -7,6 +7,9 @@ import LoginPage from "./components/pages/loginPage";
 import NurseDetailPage from "./components/pages/nurseDetailPage";
 import PageNotFound from "./components/pages/pageNotFound";
 
+import { Provider } from "react-redux";
+import { store } from "./state";
+
 import { fakeAuth } from "./rough/mockApis";
 
 export interface IAppProps {}
@@ -25,29 +28,31 @@ const App: React.FunctionComponent<IAppProps> = () => {
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route
-            index
-            element={
-              <HomePage
-                token={token}
-                onLogin={handleLogin}
-                onLogout={handleLogout}
-              ></HomePage>
-            }
-          ></Route>
-          <Route
-            path="/nurse/:id"
-            element={<NurseDetailPage></NurseDetailPage>}
-          ></Route>
-        </Route>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route
+              index
+              element={
+                <HomePage
+                  token={token}
+                  onLogin={handleLogin}
+                  onLogout={handleLogout}
+                ></HomePage>
+              }
+            ></Route>
+            <Route
+              path="/nurse/:id"
+              element={<NurseDetailPage></NurseDetailPage>}
+            ></Route>
+          </Route>
 
-        <Route path="login" element={<LoginPage></LoginPage>}></Route>
-        <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="login" element={<LoginPage></LoginPage>}></Route>
+          <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import RepositoriesList from "../repositoriesList";
+
 export interface IHomePageProps {
   onLogin: () => void;
   onLogout: () => void;
@@ -10,35 +12,6 @@ export interface IHomePageProps {
 
 const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
   const navigate = useNavigate();
-  //   const [term, setTerm] = useState("");
-
-  //  **Replace dispatch** const dispatch = useDispatch();
-  //   const { searchRepositories } = useActions(); // **Replaced * dispatch**
-
-  // ** Fixe Use Any **
-  //   const { data, error, loading } = useSelector(
-  //     (state: any) => state.repositoriesReducer
-  //   );
-  // ** Fixed Use Any **
-  //   const { data, error, loading } = useTypedSelector(
-  //     (state) => state.repositoriesReducer
-  //   );
-
-  //   console.log(data);
-
-  //   console.log(state);
-
-  //   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     event.preventDefault();
-
-  //     // **Replace dispatch** dispatch(actionCreators.searchRepositories(term) as any);
-  //     searchRepositories(term); //**Replaced * dispatch**
-  //   };
-
-  //   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setTerm(event.target.value);
-
-  //   };
 
   return (
     <div>
@@ -56,6 +29,8 @@ const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
           )}
         </div>
       </div>
+      <div> This is nursle list</div>
+      <RepositoriesList></RepositoriesList>
     </div>
   );
 };
