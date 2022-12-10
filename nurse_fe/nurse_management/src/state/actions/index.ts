@@ -6,7 +6,7 @@ interface LoginUserAction {
 
 interface LoginUserSuccessAction {
   type: ActionType.LOGIN_USER_SUCCESS;
-  payload: string[];
+  payload: any;
 }
 
 interface LoginUserErrorAction {

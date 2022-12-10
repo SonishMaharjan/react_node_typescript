@@ -14,13 +14,18 @@ const NurseList: React.FC<INurseListProps> = () => {
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    loginUser("react");
+    const data = {
+      email: "sonish@gmail.com",
+      password: "Hello123",
+    };
+
+    loginUser(data);
   };
 
   return (
     <div>
       Nurse List page
-      <button onClick={onSubmit}>Get Nursers</button>
+      <button onClick={onSubmit}>Login</button>
       <div>
         {error && <h3>Error Occured</h3>}
         {loading && <h3>Loading....</h3>}
