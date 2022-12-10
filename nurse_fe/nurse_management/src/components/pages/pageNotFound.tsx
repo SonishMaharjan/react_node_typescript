@@ -1,15 +1,8 @@
 import { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+export interface IpageNotFoundProps {}
 
-export interface IHomePageProps {
-  onLogin: () => void;
-  onLogout: () => void;
-  token: string;
-}
-
-const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
-  const navigate = useNavigate();
+const pageNotFound: React.FC<IpageNotFoundProps> = () => {
   //   const [term, setTerm] = useState("");
 
   //  **Replace dispatch** const dispatch = useDispatch();
@@ -37,27 +30,9 @@ const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
 
   //   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //     setTerm(event.target.value);
-
   //   };
 
-  return (
-    <div>
-      Home page Link to detail page <Link to="/nurse/1"> Go to nurse 1</Link>
-      <button onClick={() => navigate("/nurse/3")}>Go nurse 3</button>
-      <div>
-        <h4> Sign in</h4>
-        <div>
-          {token ? (
-            <button type="button" onClick={onLogout}>
-              Sign Out
-            </button>
-          ) : (
-            <button onClick={onLogin}> Sign In</button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return <div>Page not found page</div>;
 };
 
-export default HomePage;
+export default pageNotFound;

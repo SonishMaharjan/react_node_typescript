@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export interface IHomePageProps {
-  onLogin: () => void;
-  onLogout: () => void;
-  token: string;
-}
+export interface INurseDetailPageProps {}
 
-const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
-  const navigate = useNavigate();
+const NurseDetailPage: React.FC<INurseDetailPageProps> = () => {
   //   const [term, setTerm] = useState("");
+
+  const [message, setMessage] = useState("");
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      setMessage("th nurse id " + id);
+    } else {
+      setMessage("invalid nurse id ");
+    }
+  }, []);
 
   //  **Replace dispatch** const dispatch = useDispatch();
   //   const { searchRepositories } = useActions(); // **Replaced * dispatch**
@@ -37,27 +44,15 @@ const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
 
   //   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //     setTerm(event.target.value);
-
   //   };
 
   return (
     <div>
-      Home page Link to detail page <Link to="/nurse/1"> Go to nurse 1</Link>
-      <button onClick={() => navigate("/nurse/3")}>Go nurse 3</button>
-      <div>
-        <h4> Sign in</h4>
-        <div>
-          {token ? (
-            <button type="button" onClick={onLogout}>
-              Sign Out
-            </button>
-          ) : (
-            <button onClick={onLogin}> Sign In</button>
-          )}
-        </div>
-      </div>
+      {message}
+      <div>Nurse detail page</div>
+      validateion token <span> {message}</span>
     </div>
   );
 };
 
-export default HomePage;
+export default NurseDetailPage;

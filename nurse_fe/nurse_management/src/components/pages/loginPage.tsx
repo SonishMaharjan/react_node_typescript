@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const LoginPage: React.FC = () => {
+export interface ILoginPageProps {}
+
+const LoginPage: React.FC<ILoginPageProps> = () => {
   //   const [term, setTerm] = useState("");
 
   //  **Replace dispatch** const dispatch = useDispatch();
