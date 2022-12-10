@@ -1,13 +1,11 @@
-import { useDispatch } from "react-redux";
-import { actionCreators } from "../state";
-
+import { useActions } from "../hooks/useAction";
 
 import { useTypedSelector } from "../hooks/userTypedSelector";
 
 export interface INurseListProps {}
 
 const NurseList: React.FC<INurseListProps> = () => {
-  const dispatch = useDispatch();
+  const { loginUser } = useActions();
 
   const { data, error, loading } = useTypedSelector(
     (state) => state.userReducer
@@ -16,7 +14,7 @@ const NurseList: React.FC<INurseListProps> = () => {
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    dispatch(actionCreators.loginUser("heeh") as any);
+    loginUser("react");
   };
 
   return (
