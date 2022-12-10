@@ -1,15 +1,16 @@
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../state";
 
-import { useSelector } from "react-redux";
+
+import { useTypedSelector } from "../hooks/userTypedSelector";
 
 export interface INurseListProps {}
 
 const NurseList: React.FC<INurseListProps> = () => {
   const dispatch = useDispatch();
 
-  const { data, error, loading } = useSelector(
-    (state: any) => state.userReducer
+  const { data, error, loading } = useTypedSelector(
+    (state) => state.userReducer
   );
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
