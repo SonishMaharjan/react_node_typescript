@@ -12,6 +12,8 @@ import { store } from "./state";
 
 import { fakeAuth } from "./rough/mockApis";
 
+import "./App.css";
+
 export interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = () => {
