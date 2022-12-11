@@ -13,6 +13,7 @@ import { store } from "./state";
 import { fakeAuth } from "./rough/mockApis";
 
 import "./App.css";
+import Alert from "./components/alert";
 
 export interface IAppProps {}
 
@@ -30,31 +31,34 @@ const App: React.FunctionComponent<IAppProps> = () => {
   };
 
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">
-            <Route
-              index
-              element={
-                <HomePage
-                  token={token}
-                  onLogin={handleLogin}
-                  onLogout={handleLogout}
-                ></HomePage>
-              }
-            ></Route>
-            <Route
-              path="/nurse/:id"
-              element={<NurseDetailPage></NurseDetailPage>}
-            ></Route>
-          </Route>
+    <>
+      <Alert></Alert>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route
+                index
+                element={
+                  <HomePage
+                    token={token}
+                    onLogin={handleLogin}
+                    onLogout={handleLogout}
+                  ></HomePage>
+                }
+              ></Route>
+              <Route
+                path="/nurse/:id"
+                element={<NurseDetailPage></NurseDetailPage>}
+              ></Route>
+            </Route>
 
-          <Route path="login" element={<LoginPage></LoginPage>}></Route>
-          <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+            <Route path="login" element={<LoginPage></LoginPage>}></Route>
+            <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </>
   );
 };
 
