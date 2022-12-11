@@ -3,8 +3,8 @@ import { ActionType } from "../action-types";
 import { Action } from "../actions";
 
 import { Dispatch } from "redux";
-import axios from "axios";
 
+import { loginUser as loginUserService } from "../../services/userServices";
 interface IUserLogin {
   email: string;
   password: string;
@@ -17,10 +17,7 @@ export const loginUser = (userData: IUserLogin) => {
     });
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:1337/api/sessions",
-        userData
-      );
+      const data = await loginUserService(userData);
 
       const { accessToken, refreshToken } = data;
 

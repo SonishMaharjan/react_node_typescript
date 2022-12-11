@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import RepositoriesList from "../repositoriesList";
 
+import NurseList from "../nurseList";
+
 export interface IHomePageProps {
   onLogin: () => void;
   onLogout: () => void;
@@ -31,6 +33,8 @@ const HomePage: React.FC<IHomePageProps> = ({ onLogin, onLogout, token }) => {
       </div>
       <div> This is nursle list</div>
       <RepositoriesList></RepositoriesList>
+      <div> -------Nurse list---------</div>
+      <NurseList></NurseList>
     </div>
   );
 };
