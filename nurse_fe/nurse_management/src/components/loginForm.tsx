@@ -1,11 +1,13 @@
 import useForm from "../hooks/useForm";
 
-import { signUpValidation } from "../rules/userValidation";
+import { loginValidation } from "../rules/userValidation";
 
-import { signUpUser } from "../services/userServices";
+import { loginUser } from "../services/userServices";
 
 import { publish } from "../event";
 import { ALERT_TYPE_CLASS } from "../constanst";
+
+import { redirectTo } from "../utils";
 
 export interface ISignUpFormProps {}
 
@@ -22,17 +24,21 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
     handleChange: any;
     handleSubmit: any;
     resetForm: any;
-  } = useForm(signUp, signUpValidation);
+  } = useForm(signUp, loginValidation);
 
   async function signUp() {
     try {
-      await signUpUser(values);
+      await loginUser(values);
+
+      redirectTo("/");
+
       resetForm();
 
-      publish("showAlert", { message: "New user added." });
+      publish("showAlert", { message: "Logged in succesfully." });
     } catch (err: any) {
+      console.log(err);
       publish("showAlert", {
-        message: `Can not add user: ${err.message}`,
+        message: `Can not login: ${err?.response?.data || ""}`,
         alertClass: ALERT_TYPE_CLASS.FAILED,
       });
     }
@@ -40,25 +46,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
 
   return (
     <div>
-      <h3>Sign up</h3>
+      <h3>Login</h3>
       <form>
-        <div className="form-group">
-          <label htmlFor="nameInput">Name</label>
-          <input
-            name="name"
-            type="name"
-            className="form-control"
-            id="nameInput"
-            aria-describedby="nameHelp"
-            placeholder="Enter name"
-            onChange={handleChange}
-            value={values?.name || ""}
-          />
-
-          {errors?.name && (
-            <small className="form-text text-danger">{errors?.name}</small>
-          )}
-        </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
@@ -95,10 +84,10 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
 
         <button
           type="submit"
-          className="btn btn-success"
+          className="btn btn-primary"
           onClick={handleSubmit}
         >
-          Sign Up
+          Login
         </button>
       </form>
     </div>

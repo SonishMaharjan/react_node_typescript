@@ -9,7 +9,7 @@ const useForm = (callback: any, validate: any) => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
     }
-  }, [errors, callback, isSubmitting]);
+  }, [errors]);
 
   const handleSubmit = (event: any) => {
     if (event) event.preventDefault();

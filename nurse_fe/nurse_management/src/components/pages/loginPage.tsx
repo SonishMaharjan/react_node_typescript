@@ -1,6 +1,6 @@
-import { useState } from "react";
-
 import SignUpForm from "../signUpForm";
+
+import LoginForm from "../loginForm";
 
 export interface ILoginPageProps {}
 
@@ -16,7 +16,7 @@ const LoginPage: React.FC<ILoginPageProps> = () => {
           <SignUpForm></SignUpForm>
 
           <div>
-            <h3>Login</h3>
+            <LoginForm></LoginForm>
           </div>
         </div>
       </div>

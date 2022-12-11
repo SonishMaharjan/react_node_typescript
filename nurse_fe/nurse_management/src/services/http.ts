@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirectTo } from "../utils";
 
 const config = {
   baseURL: "http://localhost:1337/api/",
@@ -35,7 +36,8 @@ authenticatedHttp.interceptors.request.use(
     }
 
     // eslint-disable-next-line no-restricted-globals
-    // location.replace("http://localhost:3000/login");
+
+    redirectTo("/login");
 
     throw new axios.Cancel("missing access token");
 
