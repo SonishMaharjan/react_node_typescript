@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import jwtDecode from "jwt-decode";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -10,55 +12,22 @@ import PageNotFound from "./components/pages/pageNotFound";
 import { Provider } from "react-redux";
 import { store } from "./state";
 
-import { fakeAuth } from "./rough/mockApis";
-
 import "./App.css";
 import Alert from "./components/alert";
+// import { redirectTo } from "./utils";
+
+import MainWrapper from "./components/MainWrapper";
 
 export interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = () => {
-  const [token, setToken] = React.useState<string>("");
-
-  const handleLogin = async () => {
-    const token = await fakeAuth();
-
-    setToken(token);
-  };
-
-  const handleLogout = () => {
-    setToken("");
-  };
-
   return (
-    <>
-      <Alert></Alert>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
-              <Route
-                index
-                element={
-                  <HomePage
-                    token={token}
-                    onLogin={handleLogin}
-                    onLogout={handleLogout}
-                  ></HomePage>
-                }
-              ></Route>
-              <Route
-                path="/nurse/:id"
-                element={<NurseDetailPage></NurseDetailPage>}
-              ></Route>
-            </Route>
-
-            <Route path="login" element={<LoginPage></LoginPage>}></Route>
-            <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <>
+        <Alert></Alert>
+        <MainWrapper></MainWrapper>
+      </>
+    </Provider>
   );
 };
 

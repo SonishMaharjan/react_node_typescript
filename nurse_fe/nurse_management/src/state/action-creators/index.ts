@@ -10,7 +10,7 @@ interface IUserLogin {
   password: string;
 }
 
-export const loginUser = (userData: IUserLogin) => {
+export const loginUser = (userData: any) => {
   return async (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.LOGIN_USER,

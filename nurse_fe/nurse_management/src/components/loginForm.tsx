@@ -28,7 +28,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
 
   async function signUp() {
     try {
-      await loginUser(values);
+     const res = await loginUser(values);
+
+     localStorage.setItem("accessToken", res.accessToken);
 
       redirectTo("/");
 
