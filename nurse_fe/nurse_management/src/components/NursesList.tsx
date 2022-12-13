@@ -3,6 +3,11 @@ import { useTypedSelector } from "../hooks/userTypedSelector";
 
 import { fetchAllNurses } from "../services/nurseServices";
 
+
+import { INurse } from "./nurseInfo";
+
+import NurseInfo from "./nurseInfo";
+
 export interface INurseListProps {}
 
 const NurseList: React.FC<INurseListProps> = () => {
@@ -23,40 +28,13 @@ const NurseList: React.FC<INurseListProps> = () => {
 
   return (
     <div>
+      <h3>Available Nurses</h3>
       {nurseList.length > 0 ? (
         <div>
           <div>
             <ul className="list-group">
-              {nurseList.map((nurse: any) => (
-                <div>
-                  <li className="list-group-item">
-                    <div>
-                      <label>Name:</label> {nurse.name || "N/A"}
-                    </div>
-
-                    <div>
-                      <label>Email:</label> {nurse.email || "N/A"}
-                    </div>
-
-                    <div>
-                      <label>Weekdays:</label>{" "}
-                      {nurse.weekdays.join(", ") || "N/A"}
-                    </div>
-
-                    <div>
-                      <label>Start Time:</label> {nurse.startTime || "N/A"}
-                    </div>
-
-                    <div>
-                      <label>End Time:</label> {nurse.endTime || "N/A"}
-                    </div>
-
-                    <div>
-                      <label>Is Rounding Manager:</label>{" "}
-                      {nurse.isRoundingManager ? "Yes" : "No"}
-                    </div>
-                  </li>
-                </div>
+              {nurseList.map((nurse: INurse) => (
+                <NurseInfo key={nurse.id} nurse={nurse}></NurseInfo>
               ))}
             </ul>
           </div>
