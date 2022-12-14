@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useTypedSelector } from "../hooks/userTypedSelector";
+import NurseForm from "./nurseForm";
 
 import { fetchAllNurses } from "../services/nurseServices";
 
+import BootstrapModal from "./bootstrapModal";
 
 import { INurse } from "./nurseInfo";
 
@@ -22,6 +24,11 @@ const NurseList: React.FC<INurseListProps> = () => {
     setNurseList(list);
   };
 
+  const closeModal = () => {
+    $("#nurseModal").modal("hide");
+    fetchAndSetNurseList();
+  };
+
   useEffect(() => {
     fetchAndSetNurseList();
   }, []);
@@ -29,6 +36,20 @@ const NurseList: React.FC<INurseListProps> = () => {
   return (
     <div>
       <h3>Available Nurses</h3>
+
+      <button
+        type="button"
+        className="btn btn-primary"
+        data-toggle="modal"
+        data-target="#nurseModal"
+      >
+        Add new nurse
+      </button>
+
+      <BootstrapModal hideFooter={true} dataTargetId="nurseModal">
+        <NurseForm onAddedNurse={closeModal}></NurseForm>
+      </BootstrapModal>
+
       {nurseList.length > 0 ? (
         <div>
           <div>
