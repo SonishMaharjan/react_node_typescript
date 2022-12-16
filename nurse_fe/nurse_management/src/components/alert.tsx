@@ -14,7 +14,6 @@ const Alert: React.FC<IAlertProps> = () => {
 
   useEffect(() => {
     subscribe("showAlert", (event: any) => {
-      console.log(event?.detail?.alertClass);
       setAlertClass(event?.detail?.alertClass || ALERT_TYPE_CLASS.SUCCESS);
       setMessage(event?.detail?.message || "");
 

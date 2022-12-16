@@ -21,7 +21,5 @@ export function createNurseValidation(values: any) {
     errors.endTime = "Invalid end time format. Format should be HH:MM";
   }
 
-  console.log(errors);
-
   return errors;
 }

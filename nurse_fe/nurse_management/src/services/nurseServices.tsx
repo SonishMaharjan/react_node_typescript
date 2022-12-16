@@ -3,12 +3,11 @@ import { authenticatedHttp } from "./http";
 export const fetchAllNurses = async () => {
   const { data } = await authenticatedHttp.get("/nurses");
 
-  return data;
+  return data.map((nurse: INurse) => fromJSON(nurse));
 };
 
-
-
 interface INurse {
+  id?: string;
   name: string;
   email: string;
   isRoundingManager?: boolean;
@@ -18,7 +17,36 @@ interface INurse {
 }
 
 export const createNurseServices = async (nurseData: INurse) => {
-  const { data } = await authenticatedHttp.post("nurses", nurseData);
+  const { data } = await authenticatedHttp.post("nurses", toJSON(nurseData));
 
-  return data;
+  return fromJSON(data);
+};
+
+export const updateNurseServices = async (id: string, nurseData: INurse) => {
+  const { data } = await authenticatedHttp.put(
+    `nurses/${id}`,
+    toJSON(nurseData)
+  );
+
+  return fromJSON(data);
+};
+
+const toJSON = (nurse: INurse) => {
+  return {
+    ...nurse,
+    startTime: nurse.startTime || null,
+    endTime: nurse.endTime || null,
+  };
+};
+
+const fromJSON = (nurse: INurse) => {
+  return {
+    ...nurse,
+    startTime: removeSecondFromTime(nurse.startTime),
+    endTime: removeSecondFromTime(nurse.endTime),
+  };
+};
+
+const removeSecondFromTime = (time: string | undefined) => {
+  return time?.replace(/:[^:]*$/, "");
 };

@@ -47,3 +47,9 @@
   grid-template-columns: 1fr 1fr 1fr;
 
 }
+
+.user-info-wrapper{
+  display: flex;
+  justify-content: space-between;
+
+}

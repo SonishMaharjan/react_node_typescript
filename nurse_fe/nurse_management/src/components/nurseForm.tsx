@@ -2,34 +2,69 @@ import useForm from "../hooks/useForm";
 
 import { createNurseValidation } from "../rules/nurseValidation";
 
-import { createNurseServices } from "../services/nurseServices";
+import {
+  createNurseServices,
+  updateNurseServices,
+} from "../services/nurseServices";
+
+import { capitalize } from "lodash";
 
 import { publish } from "../event";
 import { ALERT_TYPE_CLASS } from "../constanst";
 
 import { WEEKDAYS } from "../constanst";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { INurse } from "../types";
 
 export interface INurseFormProps {
-  onAddedNurse: () => void;
+  onFormSubmitted: () => void;
+  isUpdateForm?: Boolean;
+  nurse?: INurse;
 }
 
-const NurseForm: React.FC<INurseFormProps> = ({ onAddedNurse }) => {
-  const { values, errors, resetForm, handleChange, handleSubmit } = useForm(
-    addNurse,
-    createNurseValidation
-  );
+const NurseForm: React.FC<INurseFormProps> = ({
+  onFormSubmitted,
+  isUpdateForm,
+  nurse,
+}) => {
+  const {
+    values,
+    errors,
+    resetForm,
+    handleChange,
+    handleSubmit,
+    setInitialValue,
+  } = useForm(submitNurseForm, createNurseValidation);
 
   const [weekdays, setWeekdays] = useState<string[]>([]);
   const [isRoundingManager, setIsRoundingManager] = useState<boolean>(false);
 
-  async function addNurse() {
+  useEffect(() => {
+    // setInitialValueForUpdateForm();
+
+    setInitialFormValue(nurse);
+  }, [nurse]);
+
+  function setInitialFormValue(nurse?: INurse) {
+    setInitialValue(nurse);
+
+    setWeekdays(nurse?.weekdays || []);
+    setIsRoundingManager(nurse?.isRoundingManager || false);
+  }
+
+  async function submitNurseForm() {
     try {
       const payload = { ...values, weekdays, isRoundingManager };
 
-      await createNurseServices(payload);
-      onAddedNurse();
+      if (isUpdateForm) {
+        await updateNurseServices(nurse?.id || "", payload);
+      } else {
+        await createNurseServices(payload);
+      }
+
+      onFormSubmitted();
       resetForm();
 
       publish("showAlert", { message: "New nurse added." });
@@ -151,7 +186,7 @@ const NurseForm: React.FC<INurseFormProps> = ({ onAddedNurse }) => {
                     }}
                   />
                   <label className="form-check-label" htmlFor={weekday}>
-                    {weekday}
+                    {capitalize(weekday)}
                   </label>
                 </div>
               ))}
@@ -167,7 +202,6 @@ const NurseForm: React.FC<INurseFormProps> = ({ onAddedNurse }) => {
             id="flexRadioDefault2"
             checked={isRoundingManager}
             onClick={() => {
-              console.log(" -- ", !isRoundingManager);
               updateRoundingManager(!isRoundingManager);
             }}
           />
@@ -177,7 +211,7 @@ const NurseForm: React.FC<INurseFormProps> = ({ onAddedNurse }) => {
         </div>
 
         <button onClick={onAddClick} className="btn btn-secondary">
-          Add Nurse
+          {isUpdateForm ? "Update" : "Add"} Nurse
         </button>
       </form>
     </div>

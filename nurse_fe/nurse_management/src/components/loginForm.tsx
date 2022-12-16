@@ -28,9 +28,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
 
   async function signUp() {
     try {
-     const res = await loginUser(values);
+      const res = await loginUser(values);
 
-     localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("accessToken", res.accessToken);
 
       redirectTo("/");
 
@@ -38,7 +38,6 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
 
       publish("showAlert", { message: "Logged in succesfully." });
     } catch (err: any) {
-      console.log(err);
       publish("showAlert", {
         message: `Can not login: ${err?.response?.data || ""}`,
         alertClass: ALERT_TYPE_CLASS.FAILED,

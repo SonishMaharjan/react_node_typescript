@@ -9,6 +9,7 @@ const useForm = (
   handleChange: (event: any) => void;
   handleSubmit: (event: any) => void;
   resetForm: () => void;
+  setInitialValue: (values: any) => void;
 } => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
@@ -41,12 +42,17 @@ const useForm = (
     setIsSubmitting(false);
   };
 
+  const setInitialValue = (values: any) => {
+    setValues(values);
+  };
+
   return {
     values,
     errors,
     handleChange,
     resetForm,
     handleSubmit,
+    setInitialValue,
   };
 };
 
