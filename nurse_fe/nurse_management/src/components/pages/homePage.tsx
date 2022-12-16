@@ -13,10 +13,7 @@ const HomePage: React.FC<IHomePageProps> = () => {
 
   return (
     <div>
-      Home page Link to detail page <Link to="/nurse/1"> Go to nurse 1</Link>
-      <button onClick={() => navigate("/nurse/3")}>Go nurse 3</button>
       <NursesList></NursesList>
-      <div> -------Nurse list---------</div>
     </div>
   );
 };

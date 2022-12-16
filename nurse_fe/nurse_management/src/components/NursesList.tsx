@@ -14,9 +14,9 @@ export interface INurseListProps {}
 
 const NurseList: React.FC<INurseListProps> = () => {
   const [nurseList, setNurseList] = useState([]);
+  const [isUpdateForm, setIsUpdateForm] = useState(false);
 
-  const [selectedNurseForUpdate, setSelectedNurseForUpdate] =
-    useState<INurse>();
+  const [selectedNurseForUpdate, setSelectedNurseForUpdate] = useState<any>();
 
   const fetchAndSetNurseList = async () => {
     const list = await fetchAllNurses();
@@ -30,7 +30,11 @@ const NurseList: React.FC<INurseListProps> = () => {
 
   const openAddNurseModal = (isUpdating: boolean = false, nurse?: INurse) => {
     if (isUpdating) {
+      setIsUpdateForm(true);
       setSelectedNurseForUpdate(nurse);
+    } else {
+      setIsUpdateForm(false);
+      setSelectedNurseForUpdate({});
     }
     $("#nurseModal").modal("show");
   };
@@ -54,7 +58,7 @@ const NurseList: React.FC<INurseListProps> = () => {
       <BootstrapModal hideFooter={true} dataTargetId="nurseModal">
         <NurseForm
           onFormSubmitted={closAddNurseeModal}
-          isUpdateForm={true}
+          isUpdateForm={isUpdateForm}
           nurse={selectedNurseForUpdate}
         ></NurseForm>
       </BootstrapModal>
@@ -70,6 +74,7 @@ const NurseList: React.FC<INurseListProps> = () => {
                   onUpdateClick={(event: any, nurse: INurse) => {
                     openAddNurseModal(true, nurse);
                   }}
+                  updateListCallback={fetchAndSetNurseList}
                 ></NurseInfo>
               ))}
             </ul>

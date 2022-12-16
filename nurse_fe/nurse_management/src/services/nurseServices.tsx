@@ -31,6 +31,13 @@ export const updateNurseServices = async (id: string, nurseData: INurse) => {
   return fromJSON(data);
 };
 
+export const deleteNurseServices = async (id: string) => {
+  const { data } = await authenticatedHttp.delete(`nurses/${id}`);
+
+  return fromJSON(data);
+};
+
+
 const toJSON = (nurse: INurse) => {
   return {
     ...nurse,

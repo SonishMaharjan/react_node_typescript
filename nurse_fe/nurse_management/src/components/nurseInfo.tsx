@@ -1,13 +1,36 @@
-import BootstrapModal from "./bootstrapModal";
-import NurseForm from "./nurseForm";
+import { ALERT_TYPE_CLASS } from "../constanst";
+
+import { deleteNurseServices } from "../services/nurseServices";
+
+import { publish } from "../event";
 
 import { INurse } from "../types";
 export interface INurseInfoProps {
   nurse: INurse;
   onUpdateClick: (event: any, nurse: INurse) => void;
+  updateListCallback: () => void;
 }
 
-const NurseInfo: React.FC<INurseInfoProps> = ({ nurse, onUpdateClick }) => {
+const NurseInfo: React.FC<INurseInfoProps> = ({
+  nurse,
+  onUpdateClick,
+  updateListCallback,
+}) => {
+  async function deleteNurse() {
+    try {
+      await deleteNurseServices(nurse?.id);
+
+      publish("showAlert", { message: "Nurse deleted" });
+
+      updateListCallback();
+    } catch (err: any) {
+      publish("showAlert", {
+        message: `Can not delete nurse: ${err.message}`,
+        alertClass: ALERT_TYPE_CLASS.FAILED,
+      });
+    }
+  }
+
   return (
     <div className="list-group-item user-info-wrapper">
       <div>
@@ -47,6 +70,9 @@ const NurseInfo: React.FC<INurseInfoProps> = ({ nurse, onUpdateClick }) => {
           onClick={(event) => onUpdateClick(event, nurse)}
         >
           Update
+        </button>
+        <button className="btn btn-danger" onClick={deleteNurse}>
+          Delete
         </button>
       </div>
     </div>

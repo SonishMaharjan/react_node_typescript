@@ -43,11 +43,11 @@ const NurseForm: React.FC<INurseFormProps> = ({
 
   useEffect(() => {
     // setInitialValueForUpdateForm();
-
+    resetForm();
     setInitialFormValue(nurse);
   }, [nurse]);
 
-  function setInitialFormValue(nurse?: INurse) {
+  function setInitialFormValue(nurse: any) {
     setInitialValue(nurse);
 
     setWeekdays(nurse?.weekdays || []);
