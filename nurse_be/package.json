@@ -7,6 +7,8 @@
     "dev": "nodemon --config --nodemon.json src/app.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.231.0",
+    "aws-sdk": "^2.1277.0",
     "bcrypt": "^5.1.0",
     "config": "^3.3.8",
     "cors": "^2.8.5",
@@ -16,6 +18,7 @@
     "knex": "^2.3.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.12",
+    "multer": "^1.4.5-lts.1",
     "nanoid": "^4.0.0",
     "pg": "^8.8.0",
     "pino": "^8.7.0",
@@ -32,6 +35,7 @@
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.189",
     "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7",
     "@types/nanoid": "^3.0.0",
     "@types/node": "^18.11.9",
     "@types/pino": "^7.0.5",

@@ -16,8 +16,11 @@ import {
   getNurseHandler,
   deleteNurseHandler,
   updateNurseHandler,
+  uploadNurseImageHandler,
 } from "../controller/nurse.controller";
 import { findAllNurse } from "../service/nurse.service";
+
+import { uploadImageService } from "../service/imageUploadServices";
 
 //Register nurse
 nurseRoute.post("/", validateRequest(createNurseSchema), createNurseHandler);
@@ -37,6 +40,12 @@ nurseRoute.delete(
   "/:nurseId",
   validateRequest(deleteNurseSchema),
   deleteNurseHandler
+);
+
+nurseRoute.post(
+  "/images",
+  uploadImageService.single("nurseImage"),
+  uploadNurseImageHandler
 );
 
 export default nurseRoute;

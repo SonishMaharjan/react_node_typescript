@@ -1,3 +1,5 @@
+import { uploadImageToAws } from "./awsServices";
+
 import {
   Nurse,
   createNurse,
@@ -32,3 +34,11 @@ export async function updateNurseById(id: string, nurse: Nurse) {
 export async function deleteNurseById(id: string) {
   return await deleteNurse({ id });
 }
+
+export const uploadNurseImage = async (
+  fileName: any,
+  file: any,
+  type: string
+) => {
+  return await uploadImageToAws(fileName, file, type);
+};

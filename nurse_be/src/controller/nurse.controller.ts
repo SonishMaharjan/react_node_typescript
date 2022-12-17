@@ -2,12 +2,16 @@ import { Request, response, Response } from "express";
 
 import { find, get } from "lodash";
 
+import config from "config";
+import fs from "fs";
+
 import {
   addNurse,
   findAllNurse,
   findNurseById,
   updateNurseById,
   deleteNurseById,
+  uploadNurseImage,
 } from "../service/nurse.service";
 
 export async function createNurseHandler(req: Request, res: Response) {
@@ -63,4 +67,18 @@ export async function getAllNurseHandler(req: Request, res: Response) {
   const nurses = await findAllNurse({});
 
   return res.send(nurses);
+}
+
+export async function uploadNurseImageHandler(req: Request, res: Response) {
+  const folder = "src/service/";
+
+  const filename = `${Date.now()}-${req.file?.originalname}`;
+
+  const data = await uploadNurseImage(
+    filename,
+    req.file?.buffer,
+    req.file?.mimetype || ""
+  );
+
+  return res.send(data);
 }
