@@ -70,8 +70,6 @@ export async function getAllNurseHandler(req: Request, res: Response) {
 }
 
 export async function uploadNurseImageHandler(req: Request, res: Response) {
-  const folder = "src/service/";
-
   const filename = `${Date.now()}-${req.file?.originalname}`;
 
   const data = await uploadNurseImage(

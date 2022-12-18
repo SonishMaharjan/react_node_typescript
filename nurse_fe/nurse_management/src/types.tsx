@@ -5,5 +5,6 @@ export interface INurse {
   weekdays: string[];
   startTime: number;
   endTime: number;
+  image?: string;
   isRoundingManager: boolean;
 }

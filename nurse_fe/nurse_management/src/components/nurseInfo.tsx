@@ -64,6 +64,12 @@ const NurseInfo: React.FC<INurseInfoProps> = ({
         </li>
       </div>
 
+      {nurse?.image && (
+        <div>
+          <img className="nurse-img" src={nurse.image} alt="user" />
+        </div>
+      )}
+
       <div>
         <button
           className="btn btn-success"

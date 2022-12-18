@@ -16,6 +16,9 @@ import { WEEKDAYS } from "../constanst";
 
 import { useState, useEffect } from "react";
 
+
+import FileUploadSingle from "./fileUploadSingle";
+
 import { INurse } from "../types";
 
 export interface INurseFormProps {
@@ -40,6 +43,8 @@ const NurseForm: React.FC<INurseFormProps> = ({
 
   const [weekdays, setWeekdays] = useState<string[]>([]);
   const [isRoundingManager, setIsRoundingManager] = useState<boolean>(false);
+  const [image, setImage] = useState<string>("");
+  const [resetFileValue, setResetFileValue] = useState(true);
 
   useEffect(() => {
     // setInitialValueForUpdateForm();
@@ -52,11 +57,13 @@ const NurseForm: React.FC<INurseFormProps> = ({
 
     setWeekdays(nurse?.weekdays || []);
     setIsRoundingManager(nurse?.isRoundingManager || false);
+    setImage(nurse?.image || "");
+    setResetFileValue(true);
   }
 
   async function submitNurseForm() {
     try {
-      const payload = { ...values, weekdays, isRoundingManager };
+      const payload = { ...values, weekdays, isRoundingManager, image };
 
       if (isUpdateForm) {
         await updateNurseServices(nurse?.id || "", payload);
@@ -96,6 +103,14 @@ const NurseForm: React.FC<INurseFormProps> = ({
 
   const isWeekdayEnabled = (weekday: string): boolean => {
     return weekdays.includes(weekday);
+  };
+
+  const onImageUploaded = (data: any) => {
+    setResetFileValue(false);
+
+    const { Location: location } = data;
+
+    setImage(location);
   };
 
   return (
@@ -194,25 +209,36 @@ const NurseForm: React.FC<INurseFormProps> = ({
           </div>
         </div>
 
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            checked={isRoundingManager}
-            onClick={() => {
-              updateRoundingManager(!isRoundingManager);
-            }}
-          />
-          <label className="form-check-label" htmlFor="flexRadioDefault2">
-            Add as a Rounding Manager
-          </label>
+        <div className="form-group">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              checked={isRoundingManager}
+              onClick={() => {
+                updateRoundingManager(!isRoundingManager);
+              }}
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault2">
+              Add as a Rounding Manager
+            </label>
+          </div>
         </div>
 
-        <button onClick={onAddClick} className="btn btn-secondary">
-          {isUpdateForm ? "Update" : "Add"} Nurse
-        </button>
+        <div className="form-group img-upload-wrapper">
+          <FileUploadSingle
+            onFileUploaded={onImageUploaded}
+            resetFileValue={resetFileValue}
+          ></FileUploadSingle>
+        </div>
+
+        <div className="form-group">
+          <button onClick={onAddClick} className="btn btn-secondary">
+            {isUpdateForm ? "Update" : "Add"} Nurse
+          </button>
+        </div>
       </form>
     </div>
   );

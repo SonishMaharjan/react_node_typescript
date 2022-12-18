@@ -1,12 +1,11 @@
 import multer from "multer";
 
-const upload = multer({ dest: "uploads/" });
 
 multer.memoryStorage();
 
 // below variable is define to check the type of file which is uploaded
 
-const imageFilefilter = (req: any, file: any, cb: any) => {
+const fileFilter = (req: any, file: any, cb: any) => {
   if (
     file.mimetype === "image/jpeg" ||
     file.mimetype === "image/jpg" ||
@@ -18,4 +17,4 @@ const imageFilefilter = (req: any, file: any, cb: any) => {
   }
 };
 
-export const uploadImageService = multer({ fileFilter: imageFilefilter });
+export const uploadImageService = multer({ fileFilter: fileFilter });

@@ -53,3 +53,17 @@
   justify-content: space-between;
 
 }
+
+.img-upload-wrapper{
+  height: 70px;
+  margin-left: 10px;
+
+}
+
+
+.nurse-img{
+  height: 150px;
+  width: 100px;
+  object-fit: cover;
+  object-position: 25% 25%; 
+}
