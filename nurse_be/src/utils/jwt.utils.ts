@@ -39,3 +39,7 @@ export function compareString(
 ) {
   return bcrypt.compare(compareString, compareTo).catch((e) => false);
 }
+
+export function sum(a: number, b: number) {
+  return a + b;
+}
