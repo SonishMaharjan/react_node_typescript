@@ -209,7 +209,7 @@ const NurseForm: React.FC<INurseFormProps> = ({
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="form-group round-manager-wrapper">
           <div className="form-check">
             <input
               className="form-check-input"

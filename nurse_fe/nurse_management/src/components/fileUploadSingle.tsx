@@ -57,7 +57,9 @@ const FileUploadSingle: React.FC<IFileUploadSingeProps> = ({
 
       <div>{file && `${file.name} - ${file.type}`}</div>
 
-      <button onClick={handleUploadClick}>Upload Photo</button>
+      <button className="btn btn-warning" onClick={handleUploadClick}>
+        Upload Photo
+      </button>
     </div>
   );
 };

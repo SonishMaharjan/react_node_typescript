@@ -48,11 +48,16 @@
 
 }
 
+li{
+  list-style-type: none; 
+}
+
 .user-info-wrapper{
   display: flex;
   justify-content: space-between;
-
-}
+  padding: 20px;
+  margin: 8px 0 ;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;}
 
 .img-upload-wrapper{
   height: 70px;
@@ -66,4 +71,23 @@
   width: 100px;
   object-fit: cover;
   object-position: 25% 25%; 
+  border-radius: 10px;
+}
+
+label{
+font-weight: bold;
+}
+
+.btn{
+  margin: 4px;
+}
+
+
+.round-manager-wrapper{
+  margin: 16px 0;
+}
+
+.page-header{
+  display: flex;
+  justify-content: space-between;
 }

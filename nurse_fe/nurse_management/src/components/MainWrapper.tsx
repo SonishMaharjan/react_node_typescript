@@ -9,6 +9,8 @@ import LoginPage from "./pages/loginPage";
 import NurseDetailPage from "./pages/nurseDetailPage";
 import PageNotFound from "./pages/pageNotFound";
 
+import { redirectTo } from "../utils";
+
 import { Provider } from "react-redux";
 import { store } from "../state";
 
@@ -35,10 +37,21 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
     }
   }, []);
 
+  const onLogout = () => {
+    localStorage.setItem("accessToken", "");
+    redirectTo("/login");
+  };
+
   return (
     <>
       <div className="page-header">
         <h1>Nurse Management</h1>
+
+        {token && (
+          <button onClick={onLogout} className="btn btn-info">
+            Logout
+          </button>
+        )}
       </div>
       <BrowserRouter>
         <Routes>

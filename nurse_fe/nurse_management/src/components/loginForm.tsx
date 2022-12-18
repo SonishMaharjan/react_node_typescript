@@ -70,7 +70,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
           <label htmlFor="exampleInputPassword1">Password</label>
           <input
             name="password"
-            type="text"
+            type="password"
             className="form-control"
             id="exampleInputPassword1"
             placeholder="Password"
