@@ -51,7 +51,11 @@ export interface FilterNurseQuery
 export const findNurseBy = async (
   query: FilterNurseQuery = {}
 ): Promise<Nurse[]> => {
-  const result = await dbProvider.postgres("nurses").where(query);
+  const result = await dbProvider
+    .postgres("nurses")
+    .where(query)
+    .orderBy("isRoundingManager", "desc")
+    .orderBy("created_at", "desc");
 
   return result;
 };
