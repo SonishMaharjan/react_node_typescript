@@ -1,5 +1,7 @@
 import { authenticatedHttp } from "./http";
 
+import { removeSecondFromTime } from "../utils/time";
+
 export const fetchAllNurses = async () => {
   const { data } = await authenticatedHttp.get("/nurses");
 
@@ -37,7 +39,6 @@ export const deleteNurseServices = async (id: string) => {
   return fromJSON(data);
 };
 
-
 const toJSON = (nurse: INurse) => {
   return {
     ...nurse,
@@ -54,6 +55,3 @@ const fromJSON = (nurse: INurse) => {
   };
 };
 
-const removeSecondFromTime = (time: string | undefined) => {
-  return time?.replace(/:[^:]*$/, "");
-};
