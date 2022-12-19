@@ -91,3 +91,14 @@ font-weight: bold;
   display: flex;
   justify-content: space-between;
 }
+
+
+.user-info-data{
+  display: inline-block;
+  margin: 0 8px;
+}
+
+.user-name{
+  display: inline-block;
+  font-weight: bold;
+}

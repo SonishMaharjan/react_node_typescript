@@ -22,6 +22,7 @@ export interface IMainWrapperProps {}
 
 const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
   const [token, setToken] = React.useState<string>("");
+  const [userData, setUserData] = React.useState<any>({});
 
   const { loginUser } = useActions();
 
@@ -33,7 +34,10 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
 
       const data = jwtDecode(accessToken);
 
-      loginUser(data);
+      setUserData(data);
+
+      // calling redux function
+      // loginUser(data);
     }
   }, []);
 
@@ -42,15 +46,22 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
     redirectTo("/login");
   };
 
+  console.log(store.getState());
+
   return (
     <>
       <div className="page-header">
         <h1>Nurse Management</h1>
 
         {token && (
-          <button onClick={onLogout} className="btn btn-info">
-            Logout
-          </button>
+          <div>
+            <div className="user-info-data">
+              Signed in as: <div className="user-name"> {userData.name}</div>
+            </div>
+            <button onClick={onLogout} className="btn btn-info">
+              Logout
+            </button>
+          </div>
         )}
       </div>
       <BrowserRouter>
