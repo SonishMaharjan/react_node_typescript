@@ -6,14 +6,14 @@ Thie is front-end for Nurse Management.
 
 In the project directory, you can run:
 
-#### * Clone and download the repo
+ * Clone and download the repo
 
-#### * Run `yarn` in root directory of the frontend application to install dependencies
+ * Run `yarn` in root directory of the frontend application to install dependencies
 
-#### * Create `.env` in root directory of the frontend application and copy the variables from `.env.example`
+ * Create `.env` in root directory of the frontend application and copy the variables from `.env.example`
 
-#### * Do `yarn start` to run the application
+ * Do `yarn start` to run the application
 
-#### * `yarn test` to run unit testing
+ * `yarn test` to run unit testing
 
 
