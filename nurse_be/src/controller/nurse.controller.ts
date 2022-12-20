@@ -1,9 +1,6 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 
-import { find, get } from "lodash";
-
-import config from "config";
-import fs from "fs";
+import { get } from "lodash";
 
 import {
   addNurse,

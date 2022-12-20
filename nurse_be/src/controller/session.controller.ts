@@ -2,10 +2,6 @@ import { Request, Response } from "express";
 
 import { get } from "lodash";
 
-// import //   createAccessToken,
-// // updateSession
-// "../service/session.service.post";
-
 import { validatePasswordService } from "../service/user.service";
 
 import {

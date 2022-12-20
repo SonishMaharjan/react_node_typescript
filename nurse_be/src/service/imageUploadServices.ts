@@ -1,6 +1,5 @@
 import multer from "multer";
 
-
 multer.memoryStorage();
 
 // below variable is define to check the type of file which is uploaded

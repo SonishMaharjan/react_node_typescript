@@ -13,7 +13,6 @@ export const s3Client = new S3Client({
 });
 
 export const s3 = new Aws.S3({
-  apiVersion: "2006-03-01",
   accessKeyId: config.get("AWS.AWS_ACCESS_KEY_ID") as string,
   secretAccessKey: config.get("AWS.AWS_SECRET_ACCESS_KEY") as string,
 });
