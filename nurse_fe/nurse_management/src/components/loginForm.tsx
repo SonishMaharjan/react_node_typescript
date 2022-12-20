@@ -1,13 +1,9 @@
-import useForm from "../hooks/useForm";
-
-import { loginValidation } from "../rules/userValidation";
-
-import { loginUser } from "../services/userServices";
-
 import { publish } from "../event";
-import { ALERT_TYPE_CLASS } from "../constanst";
-
 import { redirectTo } from "../utils";
+import useForm from "../hooks/useForm";
+import { ALERT_TYPE_CLASS } from "../constanst";
+import { loginUser } from "../services/userServices";
+import { loginValidation } from "../rules/userValidation";
 
 export interface ISignUpFormProps {}
 

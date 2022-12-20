@@ -1,23 +1,17 @@
+import { capitalize } from "lodash";
 import useForm from "../hooks/useForm";
+import { useState, useEffect } from "react";
 
-import { createNurseValidation } from "../rules/nurseValidation";
+import FileUploadSingle from "./fileUploadSingle";
 
 import {
   createNurseServices,
   updateNurseServices,
 } from "../services/nurseServices";
-
-import { capitalize } from "lodash";
+import { createNurseValidation } from "../rules/nurseValidation";
 
 import { publish } from "../event";
-import { ALERT_TYPE_CLASS } from "../constanst";
-
-import { WEEKDAYS } from "../constanst";
-
-import { useState, useEffect } from "react";
-
-
-import FileUploadSingle from "./fileUploadSingle";
+import { WEEKDAYS, ALERT_TYPE_CLASS } from "../constanst";
 
 import { INurse } from "../types";
 
@@ -47,7 +41,6 @@ const NurseForm: React.FC<INurseFormProps> = ({
   const [resetFileValue, setResetFileValue] = useState(true);
 
   useEffect(() => {
-    // setInitialValueForUpdateForm();
     resetForm();
     setInitialFormValue(nurse);
   }, [nurse]);
@@ -74,7 +67,9 @@ const NurseForm: React.FC<INurseFormProps> = ({
       onFormSubmitted();
       resetForm();
 
-      publish("showAlert", { message: "New nurse added." });
+      publish("showAlert", {
+        message: !isUpdateForm ? "New nurse added." : "Nurse updated.",
+      });
     } catch (err: any) {
       publish("showAlert", {
         message: `Can not add nurse: ${err.message}`,

@@ -2,7 +2,8 @@ import axios from "axios";
 import { redirectTo } from "../utils";
 
 const config = {
-  baseURL: "http://localhost:1337/api/",
+  baseURL: process.env.REACT_APP_BACKEND_API_URL,
+
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -36,11 +37,11 @@ authenticatedHttp.interceptors.request.use(
     }
 
     // eslint-disable-next-line no-restricted-globals
-
     redirectTo("/login");
 
     throw new axios.Cancel("missing access token");
 
+    //TODO: Add refesh token logic here.
     // if (!refreshToken) {
 
     // }

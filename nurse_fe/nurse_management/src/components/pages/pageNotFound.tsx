@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export interface IpageNotFoundProps {}
 
 const pageNotFound: React.FC<IpageNotFoundProps> = () => {

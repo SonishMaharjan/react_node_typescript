@@ -3,8 +3,6 @@ export const ALERT_TYPE_CLASS = {
   FAILED: " alert-danger",
 };
 
-
-
 export const WEEKDAYS = [
   "SUNDAY",
   "MONDAY",

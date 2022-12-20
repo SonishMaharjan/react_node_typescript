@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
 
 export interface INurseDetailPageProps {}
 
 const NurseDetailPage: React.FC<INurseDetailPageProps> = () => {
-  //   const [term, setTerm] = useState("");
-
   const [message, setMessage] = useState("");
 
   const { id } = useParams();

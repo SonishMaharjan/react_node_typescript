@@ -1,6 +1,5 @@
-import SignUpForm from "../signUpForm";
-
 import LoginForm from "../loginForm";
+import SignUpForm from "../signUpForm";
 
 export interface ILoginPageProps {}
 

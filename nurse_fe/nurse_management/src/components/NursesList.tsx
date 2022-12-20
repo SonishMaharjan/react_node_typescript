@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useTypedSelector } from "../hooks/userTypedSelector";
 import NurseForm from "./nurseForm";
 
 import { fetchAllNurses } from "../services/nurseServices";

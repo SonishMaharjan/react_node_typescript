@@ -1,30 +1,24 @@
-import React, { useEffect } from "react";
-
 import jwtDecode from "jwt-decode";
-
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/homePage";
 import LoginPage from "./pages/loginPage";
-import NurseDetailPage from "./pages/nurseDetailPage";
 import PageNotFound from "./pages/pageNotFound";
+// import NurseDetailPage from "./pages/nurseDetailPage";
 
 import { redirectTo } from "../utils";
 
-import { Provider } from "react-redux";
-import { store } from "../state";
-
-// import { redirectTo } from "./utils";
-
-import { useActions } from "../hooks/useAction";
+// ** Use it to import redux **
+// import { Provider } from "react-redux";
+// import { store } from "../state";
+// import { useActions } from "../hooks/useAction";
 
 export interface IMainWrapperProps {}
 
 const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
   const [token, setToken] = React.useState<string>("");
   const [userData, setUserData] = React.useState<any>({});
-
-  const { loginUser } = useActions();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -36,7 +30,7 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
 
       setUserData(data);
 
-      // calling redux function
+      //TODO: call redux function to store in redux
       // loginUser(data);
     }
   }, []);
@@ -45,8 +39,6 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
     localStorage.setItem("accessToken", "");
     redirectTo("/login");
   };
-
-  console.log(store.getState());
 
   return (
     <>
@@ -68,10 +60,11 @@ const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
         <Routes>
           <Route path="/">
             <Route index element={<HomePage></HomePage>}></Route>
-            <Route
+            {/* Use it to add nurse detail page */}
+            {/* <Route
               path="/nurse/:id"
               element={<NurseDetailPage></NurseDetailPage>}
-            ></Route>
+            ></Route> */}
           </Route>
           )<Route path="login" element={<LoginPage></LoginPage>}></Route>
           <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
