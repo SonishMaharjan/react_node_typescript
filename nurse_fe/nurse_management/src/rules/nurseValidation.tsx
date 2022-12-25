@@ -1,3 +1,9 @@
+/**
+ * Validates nurse payload while adding and updating nurse.
+ *
+ * @param values
+ * @returns
+ */
 export function createNurseValidation(values: any) {
   let errors: any = {};
 

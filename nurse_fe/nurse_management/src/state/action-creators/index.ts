@@ -5,10 +5,6 @@ import { Action } from "../actions";
 import { Dispatch } from "redux";
 
 import { loginUser as loginUserService } from "../../services/userServices";
-interface IUserLogin {
-  email: string;
-  password: string;
-}
 
 export const loginUser = (userData: any) => {
   return async (dispatch: Dispatch<Action>) => {

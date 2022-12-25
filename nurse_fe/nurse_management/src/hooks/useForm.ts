@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Custom hook to add validation in form.
+ * 
+ * @param callback 
+ * @param validate 
+ * @returns 
+ */
 const useForm = (
   callback: any,
   validate: any

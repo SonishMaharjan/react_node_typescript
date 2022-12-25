@@ -15,6 +15,13 @@ const config = {
  */
 export const http = axios.create(config);
 
+/**
+ * Function configure the authendicated axios instance.
+ * 
+ * @param axiosConfig 
+ * @param accessToken 
+ * @returns 
+ */
 const configWithAccessToken = (axiosConfig: any, accessToken: string) => ({
   ...axiosConfig,
   headers: {
@@ -24,7 +31,7 @@ const configWithAccessToken = (axiosConfig: any, accessToken: string) => ({
 });
 
 /**
- * Axios instance for AsHttp.
+ * Authenticated Axios instance.
  */
 export const authenticatedHttp = axios.create(config);
 

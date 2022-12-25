@@ -1,3 +1,9 @@
+/**
+ * Validate user payload during sing up process.
+ *
+ * @param values
+ * @returns
+ */
 export function signUpValidation(values: any) {
   let errors: any = {};
 
@@ -20,6 +26,12 @@ export function signUpValidation(values: any) {
   return errors;
 }
 
+/**
+ * Validate user payload during login process.
+ *
+ * @param values
+ * @returns
+ */
 export function loginValidation(values: any) {
   let errors: any = {};
 
