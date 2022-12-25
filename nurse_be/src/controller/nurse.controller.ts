@@ -11,6 +11,13 @@ import {
   uploadNurseImage,
 } from "../service/nurse.service";
 
+/**
+ * Handler to create nurse.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function createNurseHandler(req: Request, res: Response) {
   const userId = get(req, "user.id");
 
@@ -20,6 +27,13 @@ export async function createNurseHandler(req: Request, res: Response) {
   return res.send(nurse);
 }
 
+/**
+ * Handler to update nurse.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function updateNurseHandler(req: Request, res: Response) {
   const nurseId = get(req, "params.nurseId");
 
@@ -36,6 +50,13 @@ export async function updateNurseHandler(req: Request, res: Response) {
   return res.send(updatedNurse);
 }
 
+/**
+ * Handler to get a nurse by id.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function getNurseHandler(req: Request, res: Response) {
   const nurseId = get(req, "params.nurseId");
 
@@ -48,6 +69,13 @@ export async function getNurseHandler(req: Request, res: Response) {
   return res.send(nurse);
 }
 
+/**
+ * Handler to delete nurse.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function deleteNurseHandler(req: Request, res: Response) {
   const nurseId = get(req, "params.nurseId");
 
@@ -60,12 +88,26 @@ export async function deleteNurseHandler(req: Request, res: Response) {
   return res.sendStatus(200);
 }
 
+/**
+ * Handler to get all nurses.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function getAllNurseHandler(req: Request, res: Response) {
   const nurses = await findAllNurse({});
 
   return res.send(nurses);
 }
 
+/**
+ * Handler to update nurse.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function uploadNurseImageHandler(req: Request, res: Response) {
   const filename = `${Date.now()}-${req.file?.originalname}`;
 

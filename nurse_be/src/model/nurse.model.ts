@@ -25,6 +25,12 @@ export interface Nurse {
   createdBy?: number;
 }
 
+/**
+ * Create a new nurse Entity.
+ * 
+ * @param {Nurse} nurse 
+ * @returns {Promise<Nurse>}
+ */
 export const createNurse = async (nurse: Nurse) => {
   const timeStamp = new Date();
 
@@ -48,6 +54,12 @@ export const createNurse = async (nurse: Nurse) => {
 export interface FilterNurseQuery
   extends Omit<Nurse, "created_at" | "updated_at"> {}
 
+  /**
+ * Find a nurse Entity from provided query.
+ * 
+ * @param {Nurse} nurse 
+ * @returns {Promise<Nurse[]> }
+ */
 export const findNurseBy = async (
   query: FilterNurseQuery = {}
 ): Promise<Nurse[]> => {
@@ -60,6 +72,13 @@ export const findNurseBy = async (
   return result;
 };
 
+/**
+ * Function to update nurse entity.
+ * 
+ * @param {FilterNurseQuery} whereQuery 
+ * @param {Nurse} nurse 
+ * @returns {Promise<Nurse>}
+ */
 export const updateNurse = async (
   whereQuery: FilterNurseQuery = {},
   nurse: Nurse
@@ -85,6 +104,13 @@ export const updateNurse = async (
 
 export interface DeleteNurseQuery extends Pick<Nurse, "id"> {}
 
+
+/**
+ * Function to delete nurse entity.
+ * 
+ * @param {FilterNurseQuery} whereQuery 
+ * @returns {Promise}
+ */
 export const deleteNurse = async (whereQuery: FilterNurseQuery = {}) => {
   const timeStamp = new Date();
 

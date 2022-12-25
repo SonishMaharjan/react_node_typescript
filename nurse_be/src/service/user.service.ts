@@ -6,6 +6,12 @@ import { omit } from "lodash";
 
 import { compareString } from "../utils/jwt.utils";
 
+/**
+ * Function to create a new user.
+ * 
+ * @param {CreateUserInput} input 
+ * @returns 
+ */
 export async function createUserService(input: CreateUserInput) {
   try {
     const user = (await createUser(input))[0];
@@ -16,6 +22,11 @@ export async function createUserService(input: CreateUserInput) {
   }
 }
 
+/**
+ * Function to find all users.
+ * 
+ * @returns 
+ */
 export async function findAllUserService() {
   try {
     return await findBy({});
@@ -24,6 +35,12 @@ export async function findAllUserService() {
   }
 }
 
+/**
+ * Function to veridate email and password of the user.
+ * 
+ * @param {{email: string, password: string}} 
+ * @returns 
+ */
 export async function validatePasswordService({
   email,
   password,

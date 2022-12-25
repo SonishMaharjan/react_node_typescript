@@ -4,6 +4,14 @@ import { decode } from "../utils/jwt.utils";
 
 import { reIssueAccessToken } from "../service/session.service";
 
+/**
+ * Function to validate access token.
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ * @returns 
+ */
 const deserializeUser = async (
   req: Request,
   res: Response,

@@ -16,10 +16,11 @@ import { sign } from "../utils/jwt.utils";
 import { findBy as findSessionBy } from "../model/session.model";
 
 /**
- *
- * @param req
- * @param res
- * @returns
+ * Handler to create user session.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
  */
 export async function createUserSessionHandler(req: Request, res: Response) {
   // validate the email and password
@@ -50,10 +51,11 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 }
 
 /**
- *
- * @param req
- * @param res
- * @returns
+ * Handler to get user session.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
  */
 export async function getUserSessionHandler(req: Request, res: Response) {
   const userId = get(req, "user.id");

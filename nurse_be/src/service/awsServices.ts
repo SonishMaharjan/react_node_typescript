@@ -2,6 +2,14 @@ import { s3 } from "../awsConfing";
 
 import config from "config";
 
+/**
+ * Function to upload image to AWS.
+ * 
+ * @param filename 
+ * @param file 
+ * @param type 
+ * @returns 
+ */
 export const uploadImageToAws = async (
   filename: string,
   file: any,

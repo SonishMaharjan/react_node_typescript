@@ -17,6 +17,12 @@ export interface CreateUserInput extends Omit<User, "id"> {
   passwordConfirmation: string;
 }
 
+/**
+ * Function to create a new user entity.
+ * 
+ * @param {User} user 
+ * @returns {Promise<User>}
+ */
 export const createUser = async (user: CreateUserInput) => {
   let newUser = omit(user, "passwordConfirmation");
 
@@ -42,6 +48,12 @@ export const createUser = async (user: CreateUserInput) => {
 export interface GetUserQuery
   extends Omit<User, "created_at" | "password" | "updated_at"> {}
 
+/**
+ * Function to find user on basis of provided query.
+ * 
+ * @param {GetUserQuery} query 
+ * @returns {Promise<User[]>}
+ */
 export const findBy = async (query: GetUserQuery = {}): Promise<User[]> => {
   const result = await dbProvider.postgres("users").where(query);
 

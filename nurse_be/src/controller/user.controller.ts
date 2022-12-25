@@ -10,6 +10,13 @@ import { updateSession } from "../model/session.model";
 
 import { createUserService, findAllUserService } from "../service/user.service";
 
+/**
+ * Handler to create user.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function createUserHandler(req: Request, res: Response) {
   try {
     const user = await createUserService(req.body);
@@ -21,6 +28,13 @@ export async function createUserHandler(req: Request, res: Response) {
   }
 }
 
+/**
+ * Handler to find all users.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function findAllUserHandler(req: Request, res: Response) {
   try {
     const users = await findAllUserService();
@@ -32,6 +46,13 @@ export async function findAllUserHandler(req: Request, res: Response) {
   }
 }
 
+/**
+ * Handler to invalid user session when user logouts.
+ * 
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns Promise
+ */
 export async function invalidateUserSessionHandler(
   req: Request,
   res: Response

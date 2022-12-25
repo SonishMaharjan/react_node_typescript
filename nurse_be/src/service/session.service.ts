@@ -13,6 +13,13 @@ import { findBy as findUserBy } from "../model/user.model";
 
 import { get } from "lodash";
 
+/**
+ * Function to create a session.
+ * 
+ * @param {String} userId 
+ * @param {String} userAgent 
+ * @returns {Session}
+ */
 export async function createSessionService(
   userId: string = "",
   userAgent: string = ""
@@ -27,6 +34,12 @@ export async function createSessionService(
   return session;
 }
 
+/**
+ * Function to create access token.
+ * 
+ * @param {{user: User, session: <Session>}}  param
+ * @returns {String}
+ */
 export function createAccessToken({
   user,
   session,
@@ -43,6 +56,12 @@ export function createAccessToken({
   return accessToken;
 }
 
+/**
+ * Function to reissue the access token.
+ * 
+ * @param {{refreshToken: string}} 
+ * @returns 
+ */
 export async function reIssueAccessToken({
   refreshToken,
 }: {

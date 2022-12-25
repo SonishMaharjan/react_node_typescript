@@ -1,5 +1,4 @@
-import { compareString } from "../utils/jwt.utils";
-
+import { compareString } from "../src/utils/jwt.utils";
 test("Verify password hash ", async () => {
   // Arrange
   const passwordInput = "Hello123";

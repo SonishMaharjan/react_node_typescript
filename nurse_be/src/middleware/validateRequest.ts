@@ -4,6 +4,9 @@ import { Request, Response, NextFunction } from "express";
 
 import log from "../logger";
 
+/**
+ * Function to validate request body throug schema provided.
+ */
 const validate =
   (schema: AnySchema) =>
   async (req: Request, res: Response, next: NextFunction) => {

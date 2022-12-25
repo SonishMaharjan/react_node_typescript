@@ -4,10 +4,23 @@ import bcrypt from "bcrypt";
 
 const privateKey = config.get("SERVER.privateKey") as string;
 
+/**
+ * Function to sign token.
+ * 
+ * @param object 
+ * @param options 
+ * @returns 
+ */
 export function sign(object: Object, options?: jwt.SignOptions | undefined) {
   return jwt.sign(object, privateKey, options);
 }
 
+/**
+ * Function to decode token.
+ * 
+ * @param token 
+ * @returns 
+ */
 export function decode(token: string) {
   try {
     const decoded = jwt.verify(token, privateKey);
@@ -24,6 +37,12 @@ export function decode(token: string) {
   }
 }
 
+/**
+ * Function to get hash from password.
+ * 
+ * @param {String} password 
+ * @returns {String}
+ */
 export async function getPasswordHash(password: string = "") {
   // Random additional data
   const salt = await bcrypt.genSalt(config.get("SERVER.saltWorkFactor"));
@@ -33,6 +52,13 @@ export async function getPasswordHash(password: string = "") {
   return hash;
 }
 
+/**
+ * Compare provided string with hash.
+ * 
+ * @param {String} compareString 
+ * @param {String} compareTo 
+ * @returns {Boolean}
+ */
 export function compareString(
   compareString: string = "",
   compareTo: string = ""
