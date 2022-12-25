@@ -5,9 +5,14 @@ import { ALERT_TYPE_CLASS } from "../constanst";
 import { loginUser } from "../services/userServices";
 import { loginValidation } from "../rules/userValidation";
 
-export interface ISignUpFormProps {}
+export interface ILoginFormProps {}
 
-const SignUpForm: React.FC<ISignUpFormProps> = () => {
+/**
+ * Component for login form.
+ *
+ * @returns
+ */
+const LoginForm: React.FC<ILoginFormProps> = () => {
   const {
     values,
     errors,
@@ -91,4 +96,4 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
   );
 };
 
-export default SignUpForm;
+export default LoginForm;

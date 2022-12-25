@@ -21,6 +21,11 @@ export interface INurseFormProps {
   nurse?: INurse;
 }
 
+/**
+ * Component for nurse from.
+ * @param {INurseFormProps} param0 
+ * @returns 
+ */
 const NurseForm: React.FC<INurseFormProps> = ({
   onFormSubmitted,
   isUpdateForm,

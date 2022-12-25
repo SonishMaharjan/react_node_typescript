@@ -77,6 +77,12 @@ const toJSON = (nurse: INurse) => {
   };
 };
 
+/**
+ * Conver API payload to required object by fronend.
+ * 
+ * @param nurse 
+ * @returns {INurse}
+ */
 const fromJSON = (nurse: INurse) => {
   return {
     ...nurse,

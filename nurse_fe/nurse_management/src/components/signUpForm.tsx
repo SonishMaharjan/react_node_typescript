@@ -9,6 +9,10 @@ import { ALERT_TYPE_CLASS } from "../constanst";
 
 export interface ISignUpFormProps {}
 
+/**
+ * Component for sign up form.
+ * @returns 
+ */
 const SignUpForm: React.FC<ISignUpFormProps> = () => {
   const {
     values,

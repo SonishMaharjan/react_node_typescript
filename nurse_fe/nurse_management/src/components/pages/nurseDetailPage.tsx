@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 
 export interface INurseDetailPageProps {}
 
+/**
+ * Component for nurse detail page.
+ * 
+ * @returns 
+ */
 const NurseDetailPage: React.FC<INurseDetailPageProps> = () => {
   const [message, setMessage] = useState("");
 

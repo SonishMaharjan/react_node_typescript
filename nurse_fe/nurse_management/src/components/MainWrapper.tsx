@@ -16,6 +16,11 @@ import { redirectTo } from "../utils";
 
 export interface IMainWrapperProps {}
 
+/**
+ * Main wrapper compnent for application.
+ * 
+ * @returns 
+ */
 const MainWrapper: React.FunctionComponent<IMainWrapperProps> = () => {
   const [token, setToken] = React.useState<string>("");
   const [userData, setUserData] = React.useState<any>({});

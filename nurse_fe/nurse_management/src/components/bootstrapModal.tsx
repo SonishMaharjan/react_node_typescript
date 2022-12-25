@@ -7,6 +7,12 @@ export interface IBootstrapModalProps {
   onSubmit?: () => void;
 }
 
+/**
+ * Wrapper component for Bootstrap modal.
+ * 
+ * @param {IBootstrapModalProps} param0 
+ * @returns 
+ */
 const BootstrapModal: React.FC<IBootstrapModalProps> = ({
   dataTargetId,
   header = "Title",

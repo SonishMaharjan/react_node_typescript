@@ -11,6 +11,11 @@ import NurseInfo from "./nurseInfo";
 
 export interface INurseListProps {}
 
+/**
+ * Component for nurse list.
+ * 
+ * @returns 
+ */
 const NurseList: React.FC<INurseListProps> = () => {
   const [nurseList, setNurseList] = useState([]);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
@@ -54,7 +59,11 @@ const NurseList: React.FC<INurseListProps> = () => {
         Add new nurse
       </button>
 
-      <BootstrapModal hideFooter={true} dataTargetId="nurseModal">
+      <BootstrapModal
+        hideFooter={true}
+        header={isUpdateForm ? "Update Nurse" : "Add Nurse"}
+        dataTargetId="nurseModal"
+      >
         <NurseForm
           onFormSubmitted={closAddNurseeModal}
           isUpdateForm={isUpdateForm}

@@ -16,6 +16,10 @@ const fileFilter = (req: any, file: any, cb: any) => {
     file.mimetype === "image/jpg" ||
     file.mimetype === "image/png"
   ) {
+
+    console.log(" haha ");
+    console.log(file.mimetype);
+
     cb(null, true);
   } else {
     cb(null, false);

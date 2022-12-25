@@ -6,6 +6,11 @@ import { ALERT_TYPE_CLASS } from "../constanst";
 
 export interface IAlertProps {}
 
+/**
+ * Component to show alert.
+ * 
+ * @returns 
+ */
 const Alert: React.FC<IAlertProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("34234");

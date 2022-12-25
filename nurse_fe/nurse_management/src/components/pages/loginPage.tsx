@@ -3,6 +3,11 @@ import SignUpForm from "../signUpForm";
 
 export interface ILoginPageProps {}
 
+/**
+ * Component for login page.
+ * 
+ * @returns 
+ */
 const LoginPage: React.FC<ILoginPageProps> = () => {
   return (
     <div>

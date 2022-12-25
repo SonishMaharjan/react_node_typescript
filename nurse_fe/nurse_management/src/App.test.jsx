@@ -1,9 +1,11 @@
-// import React from "react";
-// import { render, screen } from "@testing-library/react";
-// import App from "./App";
+import React from "react";
 
-// test("renders learn react link", () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+import MainWrapper from "./components/MainWrapper";
+
+import { render, screen } from "@jest/globals";
+
+test("renders learn react link", () => {
+  render(<MainWrapper />);
+  const linkElement = screen.getByText(/Nurse Management/i);
+  expect(linkElement).toBeInTheDocument();
+});

@@ -11,6 +11,12 @@ export interface INurseInfoProps {
   updateListCallback: () => void;
 }
 
+/**
+ * Compoent for Nurse Detail data.
+ * 
+ * @param {INurseInfoProps} param0 
+ * @returns 
+ */
 const NurseInfo: React.FC<INurseInfoProps> = ({
   nurse,
   onUpdateClick,

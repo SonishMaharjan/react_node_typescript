@@ -7,6 +7,12 @@ export interface IFileUploadSingeProps {
   resetFileValue: boolean;
 }
 
+/**
+ * Component for uploading files.
+ * 
+ * @param {IFileUploadSingeProps} param0 
+ * @returns 
+ */
 const FileUploadSingle: React.FC<IFileUploadSingeProps> = ({
   onFileUploaded,
   resetFileValue,
@@ -29,7 +35,11 @@ const FileUploadSingle: React.FC<IFileUploadSingeProps> = ({
     setFile(e.target.files[0]);
 
     let formData = new FormData();
-    formData.append("nurseImage", file || "");
+
+    console.log(" -- __-");
+    console.log(e.target.files[0]);
+
+    formData.append("nurseImage", e.target.files[0]);
 
     const { data } = await authenticatedHttp.post("/nurses/images", formData, {
       headers: {
